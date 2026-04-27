@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .glass-card {
+    @apply bg-white/90 backdrop-blur-md shadow-lg border border-white/20;
+  }
+}
+
 body {
-  @apply bg-slate-50 text-slate-900;
+  @apply bg-gradient-to-br from-slate-50 to-slate-100 text-slate-900;
 }

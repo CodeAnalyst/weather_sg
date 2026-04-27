@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { listLocations, createLocation as apiCreateLocation, refreshLocation as apiRefreshLocation } from '../api/locations';
+import { listLocations, createLocation as apiCreateLocation, refreshLocation as apiRefreshLocation, deleteLocation as apiDeleteLocation } from '../api/locations';
 
 const LocationsContext = createContext(null);
 
@@ -79,4 +79,28 @@ export function useRefreshLocation() {
   };
 
   return { refresh, isPending, refreshingId, error };
+}
+
+export function useDeleteLocation() {
+  const { reload } = useContext(LocationsContext);
+  const [isPending, setIsPending] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
+  const [error, setError] = useState(null);
+
+  const del = async (locationId) => {
+    setIsPending(true);
+    setDeletingId(locationId);
+    setError(null);
+    try {
+      await apiDeleteLocation(locationId);
+      await reload();
+    } catch (err) {
+      setError(err);
+    } finally {
+      setIsPending(false);
+      setDeletingId(null);
+    }
+  };
+
+  return { del, isPending, deletingId, error };
 }

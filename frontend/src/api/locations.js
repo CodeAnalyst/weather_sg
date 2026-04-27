@@ -16,3 +16,25 @@ export async function refreshLocation(locationId) {
     method: 'POST',
   });
 }
+
+export async function deleteLocation(locationId) {
+  return request(`/locations/${locationId}`, {
+    method: 'DELETE',
+  });
+}
+
+export async function listAreas() {
+  return request('/locations/areas');
+}
+
+export async function getForecast(locationId) {
+  return request(`/locations/${locationId}/forecast`);
+}
+
+export async function getReadings(locationId) {
+  return request(`/locations/${locationId}/readings`);
+}
+
+export async function getSummary(locationId) {
+  return request(`/locations/${locationId}/summary`);
+}
